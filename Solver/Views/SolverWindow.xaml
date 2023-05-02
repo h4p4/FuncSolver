@@ -90,9 +90,9 @@
         <TextBlock Text="Введите значения x, y:" Grid.Row="0" Grid.Column="2" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
         <DataGrid Grid.Row="1" Grid.Column="2" ItemsSource="{Binding SelectedFunction.ValuesXY}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="X" IsReadOnly="False" Binding="{Binding X}"/>
-                <DataGridTextColumn Header="Y" IsReadOnly="False" Binding="{Binding Y}"/>
-                <DataGridTextColumn Header="f(x,y)" IsReadOnly="True" Binding="{Binding Result}"/>
+                <DataGridTextColumn Header="X" IsReadOnly="False" Binding="{Binding X, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Y" IsReadOnly="False" Binding="{Binding Y, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="f(x,y)" IsReadOnly="True" Binding="{Binding Result, UpdateSourceTrigger=PropertyChanged}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

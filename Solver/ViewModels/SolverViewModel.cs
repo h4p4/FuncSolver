@@ -21,7 +21,7 @@ namespace Solver.ViewModels
                 { new FunctionViewModel("Квадратичная", 2) },
                 { new FunctionViewModel("Кубическая", 3) },
                 { new FunctionViewModel("4-й степени", 4) },
-                { new FunctionViewModel("5-й степени", 5) },
+                { new FunctionViewModel("5-й степени", 5) }
             };
             _selectedFunction = _functionsList.First();
         }
