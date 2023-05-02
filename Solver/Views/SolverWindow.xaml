@@ -84,7 +84,7 @@
                 <TextBox Grid.Row="2" Name="BValueTBox" Text="{Binding SelectedFunction.B, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Grid.Row="3" Name="CTBlock" Text="c = "/>
-                <ComboBox Grid.Row="3" Name="CValueCBox" />
+                <ComboBox Grid.Row="3" Name="CValueCBox" ItemsSource="{Binding SelectedFunction.CValues}"  SelectedItem="{Binding SelectedFunction.C}"/>
             </Grid>
         </Border>
         <TextBlock Text="Введите значения x, y:" Grid.Row="0" Grid.Column="2" TextWrapping="Wrap" VerticalAlignment="Bottom"/>

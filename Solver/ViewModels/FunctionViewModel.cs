@@ -17,6 +17,7 @@ namespace Solver.ViewModels
         private float _b = 0;
         private float _c = 0;
 
+        [ObservableProperty] private ObservableCollection<float> _cValues;
         [ObservableProperty] private ObservableCollection<FunctionalVector2> _valuesXY;
         [ObservableProperty] private int _power = 1;
         [ObservableProperty] private string _title;
@@ -31,6 +32,7 @@ namespace Solver.ViewModels
                 if (e.Action == NotifyCollectionChangedAction.Add)
                     ValuesXY.Last().ViewModelCaller = this;
             };
+            InitCValues();
         }
 
         public float A
@@ -59,7 +61,17 @@ namespace Solver.ViewModels
             foreach (var item in ValuesXY)
                 item.Result = GetResult(item.X, item.Y);
         }
-
+        private void InitCValues()
+        {
+            int zeroCount = Power - 1;
+            var sb = new StringBuilder();
+            for (int i = 0; i < zeroCount; i++)
+                sb.Append("0");
+            CValues = new();
+            for (int i = 1; i <= 5; ++i)
+                CValues.Add(Convert.ToInt32(i.ToString() + sb.ToString()));
+            C = CValues.First();
+        }
 
     }
 }
