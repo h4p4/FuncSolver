@@ -11,6 +11,10 @@ using System.Threading.Tasks;
 
 namespace Solver.ViewModels
 {
+    /// <summary>
+    /// Класс, представляющий собой функцию, со значениями a, b, c.
+    /// И списком значений x, y
+    /// </summary>
     public partial class FunctionViewModel : ObservableObject
     {
         private float _a = 0;
