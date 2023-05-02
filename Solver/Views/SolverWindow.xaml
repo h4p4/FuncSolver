@@ -11,21 +11,59 @@
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition/>
+            <ColumnDefinition />
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Выберите функцию:"/>
+        <TextBlock Text="Выберите функцию:" Grid.Column="0" Grid.Row="0"/>
         <ListBox Name="FunctionsListBox" Grid.Column="0" Grid.Row="1"  Width="Auto"
-                 ItemsSource="{Binding FunctionsList}" SelectedItem="{Binding SelectedFunction}">
+                 ItemsSource="{Binding FunctionsList, UpdateSourceTrigger=PropertyChanged}" 
+                 SelectedItem="{Binding SelectedFunction, UpdateSourceTrigger=PropertyChanged}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Title}" Width="Auto"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <Grid Grid.Column="1" Grid.RowSpan="2" Margin="10 0 0 0">
+            <Grid.Resources>
+                <Style TargetType="TextBox">
+                    <Setter Property="Width" Value="Auto"/>
+                    <Setter Property="MinWidth" Value="30"/>
+                    <Setter Property="HorizontalAlignment" Value="Left"/>
+                    <Setter Property="Grid.Column" Value="1"/>
+                </Style>                
+                <Style TargetType="ComboBox">
+                    <Setter Property="Width" Value="Auto"/>
+                    <Setter Property="MinWidth" Value="30"/>
+                    <Setter Property="HorizontalAlignment" Value="Left"/>
+                    <Setter Property="Grid.Column" Value="1"/>
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+                <TextBlock Text="Введите значения:" Grid.Row="0" Grid.ColumnSpan="2"/>
+            
+                <TextBox Grid.Row="1" Name="AValueTBox"/>
+                <TextBlock Grid.Row="1" Name="ATBlock" Text="a = "/>
+            
+                <TextBox Grid.Row="2" Name="BValueTBox"/>
+                <TextBlock Grid.Row="2" Name="BTBlock" Text="b = "/>
+            
+                <ComboBox Grid.Row="3" Name="CValueCBox"/>
+                <TextBlock Grid.Row="3" Name="CTBlock" Text="c = "/>
+        </Grid>
+
     </Grid>
 </Window>
