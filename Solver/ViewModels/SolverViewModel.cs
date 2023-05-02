@@ -10,13 +10,21 @@ namespace Solver.ViewModels
 {
     public partial class SolverViewModel : ObservableObject
     {
-        [ObservableProperty] private readonly Dictionary<int, FunctionViewModel> _functions = new Dictionary<int, FunctionViewModel>()
+        [ObservableProperty] private List<FunctionViewModel> _functionsList;
+
+        [ObservableProperty] private FunctionViewModel _selectedFunction;
+
+        public SolverViewModel()
         {
-            { 1, new FunctionViewModel("Линейная", 1) },
-            { 2, new FunctionViewModel("Квадратичная", 2) },
-            { 3, new FunctionViewModel("Кубическая", 3) },
-            { 4, new FunctionViewModel("4-й степени", 4) },
-            { 5, new FunctionViewModel("5-й степени", 5) },
-        };
+            _functionsList = new List<FunctionViewModel>()
+            {
+                { new FunctionViewModel("Линейная", 1) },
+                { new FunctionViewModel("Квадратичная", 2) },
+                { new FunctionViewModel("Кубическая", 3) },
+                { new FunctionViewModel("4-й степени", 4) },
+                { new FunctionViewModel("5-й степени", 5) },
+            };
+            _selectedFunction = _functionsList.First();
+        }
     }
 }

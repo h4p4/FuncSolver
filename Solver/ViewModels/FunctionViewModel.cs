@@ -15,10 +15,10 @@ namespace Solver.ViewModels
         [ObservableProperty] private double _b;
         [ObservableProperty] private double _c;
         [ObservableProperty] private double _power;
+        [ObservableProperty] private string _title;
 
         public double Result => _a * Math.Pow(_x, _power) + _b * Math.Pow(_y, _power - 1) + _c;
-        public string Title { get; set; }
-        public Function(string title, int power)
+        public FunctionViewModel(string title, int power)
         {
             Title = title;
             _power = power;

@@ -3,10 +3,29 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Solver.Views"
+        xmlns:local="clr-namespace:Solver.Views" xmlns:viewmodels="clr-namespace:Solver.ViewModels" 
         mc:Ignorable="d"
-        Title="SolverWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="Solver (Решала)" Height="450" Width="800"
+        FontSize="18"
+        d:DataContext="{d:DesignInstance Type=viewmodels:SolverViewModel}">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Выберите функцию:"/>
+        <ListBox Name="FunctionsListBox" Grid.Column="0" Grid.Row="1"  Width="Auto"
+                 ItemsSource="{Binding FunctionsList}" SelectedItem="{Binding SelectedFunction}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Title}" Width="Auto"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>
