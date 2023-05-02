@@ -16,7 +16,8 @@ using System.Windows.Shapes;
 namespace Solver.Views
 {
     /// <summary>
-    /// Логика взаимодействия для SolverWindow.xaml
+    /// Основное окно, в конструкторе которого DataContext-у должна быть присвоена
+    /// ViewModel <see cref="SolverViewModel"/> , отвечающая за логику взаимодействия верстки этого окна с логикой.
     /// </summary>
     public partial class SolverWindow : Window
     {
