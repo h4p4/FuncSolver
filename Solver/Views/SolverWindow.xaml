@@ -5,20 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Solver.Views" xmlns:viewmodels="clr-namespace:Solver.ViewModels" 
         mc:Ignorable="d"
-        Title="Solver (Решала)" Height="450" Width="800"
+        Title="Solver (Решала)" Height="450" Width="800" MinWidth="300"
         FontSize="18"
         d:DataContext="{d:DesignInstance Type=viewmodels:SolverViewModel}">
     <Grid Margin="10">
+        <Grid.Resources>
+            <Style TargetType="DataGrid">
+                <Setter Property="BorderBrush" Value="LightGray"/>
+                <Setter Property="HorizontalGridLinesBrush" Value="LightGray"/>
+                <Setter Property="VerticalGridLinesBrush" Value="LightGray"/>
+                <Setter Property="ColumnWidth" Value="*"/>
+                <Setter Property="CanUserResizeColumns" Value="False"/>
+                <Setter Property="CanUserResizeRows" Value="False"/>
+                <Setter Property="CanUserReorderColumns" Value="False"/>
+                <Setter Property="CanUserSortColumns" Value="False"/>
+                <Setter Property="IsReadOnly" Value="False"/>
+                <Setter Property="AutoGenerateColumns" Value="False"/>
+                <Setter Property="SelectionMode" Value="Single"/>
+                <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+                <Setter Property="MinRowHeight" Value="40"/>
+                <Setter Property="HeadersVisibility" Value="Column"/>
+                <Setter Property="CanUserAddRows" Value="True"/>
+                <Setter Property="CanUserDeleteRows" Value="True"/>
+            </Style>
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition />
-            <ColumnDefinition/>
+            <ColumnDefinition MinWidth="85"/>
+            <ColumnDefinition Width="0.5*" MinWidth="85" MaxWidth="225"/>
+            <ColumnDefinition MinWidth="85"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Выберите функцию:" Grid.Column="0" Grid.Row="0"/>
+        <TextBlock Text="Выберите функцию:" Grid.Column="0" Grid.Row="0" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
         <ListBox Name="FunctionsListBox" Grid.Column="0" Grid.Row="1"  Width="Auto"
                  ItemsSource="{Binding FunctionsList, UpdateSourceTrigger=PropertyChanged}" 
                  SelectedItem="{Binding SelectedFunction, UpdateSourceTrigger=PropertyChanged}">
@@ -28,42 +48,52 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Grid Grid.Column="1" Grid.RowSpan="2" Margin="10 0 0 0">
-            <Grid.Resources>
-                <Style TargetType="TextBox">
-                    <Setter Property="Width" Value="Auto"/>
-                    <Setter Property="MinWidth" Value="30"/>
-                    <Setter Property="HorizontalAlignment" Value="Left"/>
-                    <Setter Property="Grid.Column" Value="1"/>
-                </Style>                
-                <Style TargetType="ComboBox">
-                    <Setter Property="Width" Value="Auto"/>
-                    <Setter Property="MinWidth" Value="30"/>
-                    <Setter Property="HorizontalAlignment" Value="Left"/>
-                    <Setter Property="Grid.Column" Value="1"/>
-                </Style>
-            </Grid.Resources>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-                <TextBlock Text="Введите значения:" Grid.Row="0" Grid.ColumnSpan="2"/>
-            
-                <TextBox Grid.Row="1" Name="AValueTBox"/>
-                <TextBlock Grid.Row="1" Name="ATBlock" Text="a = "/>
-            
-                <TextBox Grid.Row="2" Name="BValueTBox"/>
-                <TextBlock Grid.Row="2" Name="BTBlock" Text="b = "/>
-            
-                <ComboBox Grid.Row="3" Name="CValueCBox"/>
-                <TextBlock Grid.Row="3" Name="CTBlock" Text="c = "/>
-        </Grid>
+        <TextBlock Text="Введите значения a, b, c:" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
+        <Border Grid.Column="1" Grid.Row="1"
+                BorderThickness="1" BorderBrush="DarkGray">
+            <Grid Margin="10 0 0 0">
+                <Grid.Resources>
+                    <Style TargetType="TextBox">
+                        <Setter Property="Width" Value="Auto"/>
+                        <Setter Property="MinWidth" Value="30"/>
+                        <Setter Property="HorizontalAlignment" Value="Left"/>
+                        <Setter Property="Grid.Column" Value="1"/>
+                    </Style>
+                    <Style TargetType="ComboBox">
+                        <Setter Property="Width" Value="Auto"/>
+                        <Setter Property="MinWidth" Value="30"/>
+                        <Setter Property="HorizontalAlignment" Value="Left"/>
+                        <Setter Property="Grid.Column" Value="1"/>
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
+                <TextBlock Grid.Row="1" Name="ATBlock" Text="a = "/>
+                <TextBox Grid.Row="1" Name="AValueTBox" Text="{Binding SelectedFunction.A, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Grid.Row="2" Name="BTBlock" Text="b = "/>
+                <TextBox Grid.Row="2" Name="BValueTBox" Text="{Binding SelectedFunction.B, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Grid.Row="3" Name="CTBlock" Text="c = "/>
+                <ComboBox Grid.Row="3" Name="CValueCBox" />
+            </Grid>
+        </Border>
+        <TextBlock Text="Введите значения x, y:" Grid.Row="0" Grid.Column="2" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
+        <DataGrid Grid.Row="1" Grid.Column="2" ItemsSource="{Binding SelectedFunction.ValuesXY}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="X" IsReadOnly="False" Binding="{Binding X}"/>
+                <DataGridTextColumn Header="Y" IsReadOnly="False" Binding="{Binding Y}"/>
+                <DataGridTextColumn Header="f(x,y)" IsReadOnly="True" Binding="{Binding Result}"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

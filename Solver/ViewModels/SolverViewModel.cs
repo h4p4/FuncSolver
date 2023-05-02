@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,13 +11,11 @@ namespace Solver.ViewModels
 {
     public partial class SolverViewModel : ObservableObject
     {
-        [ObservableProperty] private List<FunctionViewModel> _functionsList;
-
+        [ObservableProperty] private ObservableCollection<FunctionViewModel> _functionsList;
         [ObservableProperty] private FunctionViewModel _selectedFunction;
-
         public SolverViewModel()
         {
-            _functionsList = new List<FunctionViewModel>()
+            _functionsList = new ObservableCollection<FunctionViewModel>()
             {
                 { new FunctionViewModel("Линейная", 1) },
                 { new FunctionViewModel("Квадратичная", 2) },
