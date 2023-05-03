@@ -24,10 +24,10 @@ namespace Solver.ViewModels
         [ObservableProperty] private ObservableCollection<float> _cValues;
 
         /// <summary>
-        /// Список всех заданных пользователем значений <see cref="FunctionalVector2.X"/>
-        /// и <see cref="FunctionalVector2.Y"/>
+        /// Список всех заданных пользователем значений <see cref="FunctionalCoordinates.X"/>
+        /// и <see cref="FunctionalCoordinates.Y"/>
         /// </summary>
-        [ObservableProperty] private ObservableCollection<FunctionalVector2> _valuesXY;
+        [ObservableProperty] private ObservableCollection<FunctionalCoordinates> _valuesXY;
 
         /// <summary>
         /// Степень уравнения <see cref="FunctionViewModel"/>.
@@ -38,7 +38,6 @@ namespace Solver.ViewModels
         /// Название функции. Например: Уравнение первой степени <see cref="Power"/>.
         /// </summary>
         [ObservableProperty] private string _title;
-
 
         public FunctionViewModel(string title, int power)
         {
@@ -56,7 +55,7 @@ namespace Solver.ViewModels
         /// <summary>
         /// Возвращает или устанавливает значение A. После установки значения
         /// вызывается метод <see cref="UpdateResult"/> для обновления
-        /// значения f(x)(<see cref="FunctionalVector2.Result"/>).
+        /// значения f(x)(<see cref="FunctionalCoordinates.Result"/>).
         /// </summary>
         public float A
         {
@@ -67,7 +66,7 @@ namespace Solver.ViewModels
         /// <summary>
         /// Возвращает или устанавливает значение B. После установки значения
         /// вызывается метод <see cref="UpdateResult"/> для обновления
-        /// значения f(x)(<see cref="FunctionalVector2.Result"/>).
+        /// значения f(x)(<see cref="FunctionalCoordinates.Result"/>).
         /// </summary>
         public float B
         {
@@ -78,7 +77,7 @@ namespace Solver.ViewModels
         /// <summary>
         /// Возвращает или устанавливает значение C. После установки значения
         /// вызывается метод <see cref="UpdateResult"/> для обновления
-        /// значения f(x)(<see cref="FunctionalVector2.Result"/>).
+        /// значения f(x)(<see cref="FunctionalCoordinates.Result"/>).
         /// </summary>
         public float C
         {
@@ -87,19 +86,19 @@ namespace Solver.ViewModels
         }
 
         /// <summary>
-        /// Возвращает новое значение <see cref="FunctionalVector2.Result"/>
-        /// исходя из текущих значений <see cref="FunctionalVector2.X"/>,
-        /// <see cref="FunctionalVector2.Y"/>, а также аргументов
+        /// Возвращает новое значение <see cref="FunctionalCoordinates.Result"/>
+        /// исходя из текущих значений <see cref="FunctionalCoordinates.X"/>,
+        /// <see cref="FunctionalCoordinates.Y"/>, а также аргументов
         /// <see cref="A"/>, <see cref="B"/>, <see cref="C"/>
-        /// <paramref name="x"/> Значение X <see cref="FunctionalVector2.X"/>.
-        /// <paramref name="y"/> Значение Y <see cref="FunctionalVector2.Y"/>.
+        /// <paramref name="x"/> Значение X <see cref="FunctionalCoordinates.X"/>.
+        /// <paramref name="y"/> Значение Y <see cref="FunctionalCoordinates.Y"/>.
         /// </summary>
         public float GetResult(float x, float y) =>
             (float)(A * Math.Pow(x, Power) + B * Math.Pow(y, Power - 1) + C);
 
         /// <summary>
-        /// Обновляет значения <see cref="FunctionalVector2.Result"/> 
-        /// для каждого <see cref="FunctionalVector2"/> в <see cref="ValuesXY"/>
+        /// Обновляет значения <see cref="FunctionalCoordinates.Result"/> 
+        /// для каждого <see cref="FunctionalCoordinates"/> в <see cref="ValuesXY"/>
         /// </summary>
         private void UpdateResult()
         {

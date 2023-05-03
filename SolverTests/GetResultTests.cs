@@ -3,15 +3,15 @@ using Solver.ViewModels;
 
 namespace SolverTests
 {
-    public class Tests
+    public class GetResultTests
     {
         SolverViewModel solverVM;
-        FunctionalVector2 funcVec2;
+        FunctionalCoordinates funcCoords;
         [SetUp]
         public void Setup()
         {
             solverVM = new SolverViewModel();
-            funcVec2 = new FunctionalVector2();
+            funcCoords = new FunctionalCoordinates();
         }
 
         [Test]
