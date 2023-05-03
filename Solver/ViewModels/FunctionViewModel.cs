@@ -1,10 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Solver.DataTypes;
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Windows.Controls;
 
 namespace Solver.ViewModels
 {
@@ -14,6 +17,7 @@ namespace Solver.ViewModels
     /// </summary>
     public partial class FunctionViewModel : ObservableObject
     {
+        private static Regex _validationRegex =  new Regex(@"^[0-9]*(?:\.[0-9]*)?$");
         private float _a = 0;
         private float _b = 0;
         private float _c = 0;
@@ -41,6 +45,7 @@ namespace Solver.ViewModels
 
         public FunctionViewModel(string title, int power)
         {
+            var regex = 
             Title = title;
             _power = power;
             ValuesXY = new();
@@ -51,6 +56,20 @@ namespace Solver.ViewModels
             };
             InitCValues();
         }
+
+        /// <summary>
+        /// Принимает в себя <see cref="TextBox"/>, проверяет его значение.
+        /// В случае не пройденной проверки - обнуляет поле.
+        /// </summary>
+        /// <param name="args">Принимаемое текстовое поле.</param>
+        [RelayCommand]
+        public void TextChanged(TextBox args)
+        {
+            string text = args.Text;
+            Match? validatedText = _validationRegex.Match(text);
+            if (validatedText.Success) return;
+            args.Text = Regex.Match(text, _validationRegex.ToString()).Value;
+        }        
 
         /// <summary>
         /// Возвращает или устанавливает значение A. После установки значения

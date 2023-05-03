@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Solver.Views" xmlns:viewmodels="clr-namespace:Solver.ViewModels" 
+        xmlns:ie="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="Solver (Решала)" Height="450" Width="800" MinWidth="300"
         FontSize="18"
@@ -78,21 +79,36 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="1" Name="ATBlock" Text="a = "/>
-                <TextBox Grid.Row="1" Name="AValueTBox" Text="{Binding SelectedFunction.A, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Row="1" Name="AValueTBox" Text="{Binding SelectedFunction.A, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                    <ie:Interaction.Triggers>
+                        <ie:EventTrigger EventName="KeyUp">
+                            <ie:InvokeCommandAction Command="{Binding SelectedFunction.TextChangedCommand}" 
+                                                    CommandParameter="{Binding ElementName=AValueTBox}"/>
+                        </ie:EventTrigger>
+                    </ie:Interaction.Triggers>
+                </TextBox>
 
                 <TextBlock Grid.Row="2" Name="BTBlock" Text="b = "/>
-                <TextBox Grid.Row="2" Name="BValueTBox" Text="{Binding SelectedFunction.B, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Row="2" Name="BValueTBox" Text="{Binding SelectedFunction.B, UpdateSourceTrigger=PropertyChanged}">
+                    <ie:Interaction.Triggers>
+                        <ie:EventTrigger EventName="KeyUp">
+                            <ie:InvokeCommandAction Command="{Binding SelectedFunction.TextChangedCommand}" 
+                                                    CommandParameter="{Binding ElementName=BValueTBox}"/>
+                        </ie:EventTrigger>
+                    </ie:Interaction.Triggers>
+                </TextBox>
 
                 <TextBlock Grid.Row="3" Name="CTBlock" Text="c = "/>
                 <ComboBox Grid.Row="3" Name="CValueCBox" ItemsSource="{Binding SelectedFunction.CValues}"  SelectedItem="{Binding SelectedFunction.C}"/>
             </Grid>
         </Border>
         <TextBlock Text="Введите значения x, y:" Grid.Row="0" Grid.Column="2" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
+
         <DataGrid Grid.Row="1" Grid.Column="2" ItemsSource="{Binding SelectedFunction.ValuesXY}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="X" IsReadOnly="False" Binding="{Binding X, UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridTextColumn Header="Y" IsReadOnly="False" Binding="{Binding Y, UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridTextColumn Header="f(x,y)" IsReadOnly="True" Binding="{Binding Result, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="X" IsReadOnly="False" Binding="{Binding X, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <DataGridTextColumn Header="Y" IsReadOnly="False" Binding="{Binding Y, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <DataGridTextColumn Header="f(x,y)" IsReadOnly="True" Binding="{Binding Result, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

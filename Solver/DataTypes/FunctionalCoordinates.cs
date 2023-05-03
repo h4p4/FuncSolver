@@ -33,7 +33,7 @@ namespace Solver.DataTypes
         {
             get => _x;
             set 
-            { 
+            {
                 SetProperty(ref _x, value); TrySetResult();
             }
         }
