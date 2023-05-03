@@ -19,15 +19,18 @@ namespace Solver.DataTypes
         private float _x;
         private float _y;
         private float? _result;
+
         public FunctionalVector2()
         {
             X = 0; Y = 0;
         }
+
         /// <summary>
         /// Хранит в себе ссылку на экземпляр <see cref="FunctionViewModel"/>, внутри <see cref="ObservableCollection{T}"/>
         /// которого хранится список <see cref="FunctionalVector2"/>
         /// </summary>
         public FunctionViewModel ViewModelCaller { private get; set; }
+
         /// <summary>
         /// Значение переменной x, которая используется в решении функции классом <see cref="FunctionViewModel"/>
         /// </summary>
@@ -39,6 +42,7 @@ namespace Solver.DataTypes
                 SetProperty(ref _x, value); TrySetResult();
             }
         }
+
         /// <summary>
         /// Значение переменной y, которая используется в решении функции классом <see cref="FunctionViewModel"/>
         /// </summary>
@@ -50,6 +54,7 @@ namespace Solver.DataTypes
                 SetProperty(ref _y, value); TrySetResult();
             }
         }
+
         /// <summary>
         /// Значение f(x).
         /// </summary>

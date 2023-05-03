@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Solver.ViewModels;
 
 namespace Solver.ViewModels
 {
@@ -18,10 +13,12 @@ namespace Solver.ViewModels
         /// Список функций.
         /// </summary>
         [ObservableProperty] private ObservableCollection<FunctionViewModel> _functionsList;
+
         /// <summary>
         /// Выбранная функция из списка функций <see cref="FunctionsList"/>
         /// </summary>
         [ObservableProperty] private FunctionViewModel _selectedFunction;
+
         public SolverViewModel()
         {
             FunctionsList = new ObservableCollection<FunctionViewModel>()
@@ -32,7 +29,7 @@ namespace Solver.ViewModels
                 { new FunctionViewModel("4-й степени", 4) },
                 { new FunctionViewModel("5-й степени", 5) }
             };
-            SelectedFunction = _functionsList.First();
+            SelectedFunction = FunctionsList.First();
         }
     }
 }
