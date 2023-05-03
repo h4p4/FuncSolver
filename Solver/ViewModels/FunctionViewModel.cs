@@ -68,7 +68,7 @@ namespace Solver.ViewModels
         public float A
         {
             get => _a;
-            set { SetProperty(ref _b, value); UpdateResult(); }
+            set { SetProperty(ref _a, value); UpdateResult(); }
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace Solver.ViewModels
         /// <paramref name="y"/> Значение Y <see cref="FunctionalCoordinates.Y"/>.
         /// </summary>
         public float GetResult(float x, float y) =>
-            (float)(_a * Math.Pow(x, Power) + _b * Math.Pow(y, Power - 1) + _c);
+            (float)(A * Math.Pow(x, Power) + B * Math.Pow(y, Power - 1) + C);
 
         /// <summary>
         /// Обновляет значения <see cref="FunctionalCoordinates.Result"/> 
