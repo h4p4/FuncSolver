@@ -17,7 +17,9 @@ namespace Solver.ViewModels
     /// </summary>
     public partial class FunctionViewModel : ObservableObject
     {
-        private static Regex _validationRegex =  new Regex(@"^[0-9]*(?:\.[0-9]*)?$");
+        private string _aView;
+        private string _bView;
+        private string _cView;
         private float _a = 0;
         private float _b = 0;
         private float _c = 0;
@@ -58,34 +60,42 @@ namespace Solver.ViewModels
         }
 
         /// <summary>
-        /// Принимает в себя <see cref="TextBox"/>, проверяет его значение.
-        /// В случае не пройденной проверки - обнуляет поле.
-        /// </summary>
-        /// <param name="args">Принимаемое текстовое поле.</param>
-        [RelayCommand]
-        public void TextChanged(TextBox args)
-        {
-            string text = args.Text;
-            Match? validatedText = _validationRegex.Match(text);
-            if (validatedText.Success) return;
-            args.Text = Regex.Match(text, _validationRegex.ToString()).Value;
-        }        
-
-        /// <summary>
         /// Возвращает или устанавливает значение A. После установки значения
         /// вызывается метод <see cref="UpdateResult"/> для обновления
-        /// значения f(x)(<see cref="FunctionalCoordinates.Result"/>).
+        /// значения f(x,y)(<see cref="FunctionalCoordinates.Result"/>).
+        /// <para>Используется для ручной установки/получения значения A с типом <see cref="float"/> .</para>
         /// </summary>
         public float A
         {
             get => _a;
-            set { SetProperty(ref _a, value); UpdateResult(); }
+            set { SetProperty(ref _b, value); UpdateResult(); }
+        }
+
+        /// <summary>
+        /// Возвращает или устанавливает значение A. После установки значения
+        /// вызывается метод <see cref="TrySetFloatProperty(ref float, ref string, string)"/> для обновления
+        /// значений f(x,y)(<see cref="FunctionalCoordinates.Result"/>).
+        /// <para>Используется для привязки к представлению значения А с типом <see cref="string"/>.</para>
+        /// </summary>
+        public string AView
+        {
+            get
+            {
+                if (_aView != null) return _aView;
+                return _a.ToString();
+            }
+            set 
+            {
+                if (TrySetFloatProperty(ref _a, ref _aView, value)) UpdateResult();
+                OnPropertyChanged(nameof(A));
+            }
         }
 
         /// <summary>
         /// Возвращает или устанавливает значение B. После установки значения
         /// вызывается метод <see cref="UpdateResult"/> для обновления
-        /// значения f(x)(<see cref="FunctionalCoordinates.Result"/>).
+        /// значения f(x,y)(<see cref="FunctionalCoordinates.Result"/>).
+        /// <para>Используется для ручной установки/получения значения B с типом <see cref="float"/> .</para>
         /// </summary>
         public float B
         {
@@ -94,14 +104,67 @@ namespace Solver.ViewModels
         }
 
         /// <summary>
+        /// Возвращает или устанавливает значение B. После установки значения
+        /// вызывается метод <see cref="TrySetFloatProperty(ref float, ref string, string)"/> для обновления
+        /// значений f(x,y)(<see cref="FunctionalCoordinates.Result"/>).
+        /// <para>Используется для привязки к представлению значения B с типом <see cref="string"/>.</para>
+        /// </summary>
+        public string BView
+        {
+            get
+            {
+                if (_bView != null) return _bView;
+                return _b.ToString();
+            }
+            set
+            {
+                if (TrySetFloatProperty(ref _b, ref _bView, value)) UpdateResult();
+                OnPropertyChanged(nameof(B));
+            }
+        }
+
+        /// <summary>
         /// Возвращает или устанавливает значение C. После установки значения
         /// вызывается метод <see cref="UpdateResult"/> для обновления
-        /// значения f(x)(<see cref="FunctionalCoordinates.Result"/>).
+        /// значения f(x,y)(<see cref="FunctionalCoordinates.Result"/>).
         /// </summary>
         public float C
         {
             get => _c;
             set { SetProperty(ref _c, value); UpdateResult(); }
+        }
+
+        /// <summary>
+        /// Пробует установить значение свойства для вывода на <see cref="Views"/>.
+        /// Перед установкой значения происходит проверка на то, является ли значение <see cref="float"/>
+        /// <para>На самом деле я просто захардкодил проверку на float, извините.</para>
+        /// </summary>
+        /// <param name="floatField"></param>
+        /// <param name="stringField">Ссылка на строкове поле</param>
+        /// <param name="valueToSet">Значение, которое будет установлено в случае успеха.</param>
+        /// <returns><see cref="true"/>: Значение было установлено. <see cref="false"/>: Значение не удалось установить</returns>
+        public static bool TrySetFloatProperty(ref float floatField, ref string stringField, string valueToSet)
+        {
+            bool valueWasSet = false;
+            if (stringField != null && int.TryParse(valueToSet.Last().ToString(), out int res))
+            {
+                float.TryParse(valueToSet.Replace(".", ","), out float floatRes);
+                floatField = floatRes;
+                valueWasSet = true;
+            }
+            stringField = null;
+            if (valueToSet != String.Empty && valueToSet.Replace(".", ",").Last() == ',')
+                if (float.TryParse(valueToSet.Replace(".", ",").Remove(valueToSet.Length - 1), out float newValueLastDot))
+                {
+                    stringField = newValueLastDot.ToString() + ",";
+                    return false;
+                }
+
+            if (!valueWasSet && float.TryParse(valueToSet, out float newValue))
+            {
+                floatField = newValue;
+            }
+            return true;
         }
 
         /// <summary>
@@ -113,7 +176,7 @@ namespace Solver.ViewModels
         /// <paramref name="y"/> Значение Y <see cref="FunctionalCoordinates.Y"/>.
         /// </summary>
         public float GetResult(float x, float y) =>
-            (float)(A * Math.Pow(x, Power) + B * Math.Pow(y, Power - 1) + C);
+            (float)(_a * Math.Pow(x, Power) + _b * Math.Pow(y, Power - 1) + _c);
 
         /// <summary>
         /// Обновляет значения <see cref="FunctionalCoordinates.Result"/> 
@@ -140,6 +203,5 @@ namespace Solver.ViewModels
                 CValues.Add(Convert.ToInt32(i.ToString() + sb.ToString()));
             C = CValues.First();
         }
-
     }
 }

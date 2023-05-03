@@ -79,24 +79,10 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="1" Name="ATBlock" Text="a = "/>
-                <TextBox Grid.Row="1" Name="AValueTBox" Text="{Binding SelectedFunction.A, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                    <ie:Interaction.Triggers>
-                        <ie:EventTrigger EventName="KeyUp">
-                            <ie:InvokeCommandAction Command="{Binding SelectedFunction.TextChangedCommand}" 
-                                                    CommandParameter="{Binding ElementName=AValueTBox}"/>
-                        </ie:EventTrigger>
-                    </ie:Interaction.Triggers>
-                </TextBox>
+                <TextBox Grid.Row="1" Name="AValueTBox" Text="{Binding SelectedFunction.AView, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
                 <TextBlock Grid.Row="2" Name="BTBlock" Text="b = "/>
-                <TextBox Grid.Row="2" Name="BValueTBox" Text="{Binding SelectedFunction.B, UpdateSourceTrigger=PropertyChanged}">
-                    <ie:Interaction.Triggers>
-                        <ie:EventTrigger EventName="KeyUp">
-                            <ie:InvokeCommandAction Command="{Binding SelectedFunction.TextChangedCommand}" 
-                                                    CommandParameter="{Binding ElementName=BValueTBox}"/>
-                        </ie:EventTrigger>
-                    </ie:Interaction.Triggers>
-                </TextBox>
+                <TextBox Grid.Row="2" Name="BValueTBox" Text="{Binding SelectedFunction.BView, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Grid.Row="3" Name="CTBlock" Text="c = "/>
                 <ComboBox Grid.Row="3" Name="CValueCBox" ItemsSource="{Binding SelectedFunction.CValues}"  SelectedItem="{Binding SelectedFunction.C}"/>
@@ -106,8 +92,8 @@
 
         <DataGrid Grid.Row="1" Grid.Column="2" ItemsSource="{Binding SelectedFunction.ValuesXY}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="X" IsReadOnly="False" Binding="{Binding X, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                <DataGridTextColumn Header="Y" IsReadOnly="False" Binding="{Binding Y, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <DataGridTextColumn Header="X" IsReadOnly="False" Binding="{Binding XView, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <DataGridTextColumn Header="Y" IsReadOnly="False" Binding="{Binding YView, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 <DataGridTextColumn Header="f(x,y)" IsReadOnly="True" Binding="{Binding Result, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             </DataGrid.Columns>
         </DataGrid>
