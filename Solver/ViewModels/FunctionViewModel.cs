@@ -19,7 +19,6 @@ namespace Solver.ViewModels
     {
         private string _aView;
         private string _bView;
-        private string _cView;
         private float _a = 0;
         private float _b = 0;
         private float _c = 0;
@@ -146,14 +145,17 @@ namespace Solver.ViewModels
         public static bool TrySetFloatProperty(ref float floatField, ref string stringField, string valueToSet)
         {
             bool valueWasSet = false;
-            if (stringField != null && int.TryParse(valueToSet.Last().ToString(), out int res))
+
+            if (String.IsNullOrWhiteSpace(valueToSet))
+                floatField = .0f;
+            if (stringField != null && int.TryParse(valueToSet.Last().ToString(), out int res)) // last char is digit 
             {
                 float.TryParse(valueToSet.Replace(".", ","), out float floatRes);
                 floatField = floatRes;
                 valueWasSet = true;
             }
             stringField = null;
-            if (valueToSet != String.Empty && valueToSet.Replace(".", ",").Last() == ',')
+            if (valueToSet != String.Empty && valueToSet.Replace(".", ",").Last() == ',') // last char is separator (. or ,)
                 if (float.TryParse(valueToSet.Replace(".", ",").Remove(valueToSet.Length - 1), out float newValueLastDot))
                 {
                     stringField = newValueLastDot.ToString() + ",";
